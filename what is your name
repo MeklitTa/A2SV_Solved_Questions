@@ -1,0 +1,10 @@
+def print_full_name(first, last):
+    if len(first) > 10 or len(last) > 10:
+        return "First and last name must be 10 characters or less."
+    else:
+        return f"Hello {first} {last}! You just delved into python."
+
+if __name__ == '__main__':
+    first_name = input()
+    last_name = input()
+    print(print_full_name(first_name, last_name))
