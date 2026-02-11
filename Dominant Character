@@ -1,0 +1,25 @@
+import sys
+input = sys.stdin.readline
+
+t = int(input())
+for _ in range(t):
+    n = int(input())
+    s = input().strip()
+
+    ans = -1
+
+    # check length 2
+    for i in range(n - 1):
+        if s[i] == 'a' and s[i + 1] == 'a':
+            ans = 2
+            break
+
+    # check length 3 if not found
+    if ans == -1:
+        for i in range(n - 2):
+            sub = s[i:i+3]
+            if sub.count('a') > sub.count('b') and sub.count('a') > sub.count('c'):
+                ans = 3
+                break
+
+    print(ans)
