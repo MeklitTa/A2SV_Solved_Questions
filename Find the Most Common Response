@@ -1,0 +1,11 @@
+class Solution:
+    def findCommonResponse(self, responses: List[List[str]]) -> str:
+        freq={}
+        for n in responses:
+            uniques=set(n)
+            for i in uniques:
+                freq[i]= freq.get(i,0) +1
+        maxs=max(freq.values()) 
+        cand=[i for i ,c in freq.items() if c==maxs] 
+        return min(cand)      
+        
