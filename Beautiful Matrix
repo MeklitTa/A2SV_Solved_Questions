@@ -1,0 +1,9 @@
+# Read the 5x5 matrix and find the position of 1
+for i in range(5):
+    row = list(map(int, input().split()))
+    if 1 in row:
+        r = i
+        c = row.index(1)
+
+# Target position is (2, 2) in 0-based indexing
+print(abs(r - 2) + abs(c - 2))
