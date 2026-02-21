@@ -1,0 +1,49 @@
+import sys
+input = sys.stdin.readline
+
+t = int(input())
+for _ in range(t):
+    n, x, k = map(int, input().split())
+    s = input().strip()
+    
+    # Prefix positions starting from x
+    pos = x
+    first_zero_time = -1
+    
+    for i in range(n):
+        if s[i] == 'L':
+            pos -= 1
+        else:
+            pos += 1
+        
+        if pos == 0:
+            first_zero_time = i + 1
+            break
+    if first_zero_time == -1:
+        print(0)
+        continue
+    if first_zero_time > k:
+        print(0)
+        continue
+    
+    count = 1  # first time reaching zero
+    remaining_time = k - first_zero_time
+    pos = 0
+    cycle_time = -1
+    
+    for i in range(n):
+        if s[i] == 'L':
+            pos -= 1
+        else:
+            pos += 1
+        
+        if pos == 0:
+            cycle_time = i + 1
+            break
+    
+    # If no cycle from zero
+    if cycle_time == -1:
+        print(count)
+    else:
+        count += remaining_time // cycle_time
+        print(count)
