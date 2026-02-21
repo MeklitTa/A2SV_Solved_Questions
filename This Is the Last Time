@@ -1,0 +1,30 @@
+import sys
+import heapq
+input = sys.stdin.readline
+
+t = int(input())
+for _ in range(t):
+    n, k = map(int, input().split())
+    casinos = []
+    for _ in range(n):
+        l, r, real = map(int, input().split())
+        casinos.append((l, r, real))
+    casinos.sort()
+    
+    max_coins = k
+    changed = True
+    
+    while changed:
+        changed = False
+        new_casinos = []
+        for l, r, real in casinos:
+            if l <= max_coins <= r:
+                # Can play this casino
+                if real > max_coins:
+                    max_coins = real
+                changed = True
+            else:
+                new_casinos.append((l, r, real))
+        casinos = new_casinos
+    
+    print(max_coins)
