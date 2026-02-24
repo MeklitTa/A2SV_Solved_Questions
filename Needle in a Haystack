@@ -1,0 +1,37 @@
+from collections import Counter
+
+T = int(input())
+for _ in range(T):
+    s = input().strip()
+    t = input().strip()
+    
+    count_s = Counter(s)
+    count_t = Counter(t)
+    
+    # Step 1: Check if possible
+    possible = True
+    for ch in count_s:
+        if count_s[ch] > count_t.get(ch, 0):
+            possible = False
+            break
+    if not possible:
+        print("Impossible")
+        continue
+    
+    # Step 2: Subtract s's letters from t
+    for ch in count_s:
+        count_t[ch] -= count_s[ch]
+        if count_t[ch] == 0:
+            del count_t[ch]
+    result = []
+    for ch in sorted(count_t.keys()):
+        if ch < s[0]:
+            result.append(ch * count_t[ch])
+    
+    result.append(s)
+    
+    for ch in sorted(count_t.keys()):
+        if ch >= s[0]:
+            result.append(ch * count_t[ch])
+    
+    print("".join(result))
