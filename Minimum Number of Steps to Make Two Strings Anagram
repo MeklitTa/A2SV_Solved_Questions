@@ -1,0 +1,12 @@
+from collections import Counter
+class Solution:
+    def minSteps(self, s: str, t: str) -> int:
+        cs = Counter(s)
+        ct = Counter(t)
+
+        steps = 0
+        for ch in ct:
+            if ct[ch] > cs.get(ch, 0):
+                steps += ct[ch] - cs.get(ch, 0)
+
+        return steps
