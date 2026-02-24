@@ -1,0 +1,41 @@
+from collections import Counter
+
+t = int(input())
+for _ in range(t):
+    n, l, r = map(int, input().split())
+    socks = list(map(int, input().split()))
+
+    left = Counter(socks[:l])
+    right = Counter(socks[l:])
+
+    # Step 1: match as many left-right pairs as possible
+    for color in list(left.keys()):
+        match = min(left[color], right.get(color, 0))
+        left[color] -= match
+        right[color] -= match
+        if left[color] == 0:
+            del left[color]
+        if color in right and right[color] == 0:
+            del right[color]
+
+    left_total = sum(left.values())
+    right_total = sum(right.values())
+    if left_total < right_total:
+        left, right = right, left
+        left_total, right_total = right_total, left_total
+    surplus = left_total - right_total
+    cost = 0
+    for color, cnt in left.items():
+        pairs = cnt // 2
+        take = min(pairs * 2, surplus)  # can reduce surplus by 2 per pair
+        cost += take // 2  # 1 operation per pair
+        surplus -= take
+        if surplus == 0:
+            break
+    remaining_unmatched = (sum(left.values()) + sum(right.values()) - 2*(left_total - surplus)) // 2
+    cost += (left_total + right_total - 2*(left_total - surplus)) // 2
+
+    # Simpler formula: cost = flips + half of total remaining socks
+    cost = cost + (left_total + right_total - 2*cost) // 2
+
+    print(cost)
