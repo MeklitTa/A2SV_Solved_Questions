@@ -1,0 +1,23 @@
+import sys
+
+def main():
+    data = list(map(int, sys.stdin.read().split()))
+    n, s = data[0], data[1]
+    a = data[2:]
+
+    left = 0
+    curr_sum = 0
+    ans = 0
+
+    for right in range(n):
+        curr_sum += a[right]
+
+        while curr_sum > s:
+            curr_sum -= a[left]
+            left += 1
+        ans += right - left + 1
+
+    print(ans)
+
+if __name__ == "__main__":
+    main()
