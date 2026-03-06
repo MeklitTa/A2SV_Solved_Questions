@@ -1,0 +1,35 @@
+import sys
+input = sys.stdin.readline
+
+t = int(input())
+for _ in range(t):
+    n, x, k = map(int, input().split())
+    s = input().strip()
+    
+    delta = 0
+    hit_positions = []
+    for i, c in enumerate(s):
+        if c == 'L':
+            delta -= 1
+        else:
+            delta += 1
+        if x + delta == 0:
+            hit_positions.append(i + 1)  # steps to reach 0
+    
+    if not hit_positions:
+        print(0)
+        continue
+    
+    total_hits = 0
+    seq_delta = delta
+    if seq_delta == 0:
+        # robot only hits 0 at positions in first sequence
+        total_hits = sum(1 for pos in hit_positions if pos <= k)
+    else:
+        for pos in hit_positions:
+            # number of times the robot can reach 0 at this offset
+            max_i = (k - pos) // n + 1  # maximum full sequences that fit within k
+            # calculate actual steps when robot will be 0
+            for i in range((k - pos) // n + 1):
+                total_hits += 1
+    print(total_hits)
