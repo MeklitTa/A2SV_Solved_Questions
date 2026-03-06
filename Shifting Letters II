@@ -1,0 +1,35 @@
+from typing import List
+
+class Solution:
+    def shiftingLetters(self, s: str, shifts: List[List[int]]) -> str:
+        n = len(s)
+        
+        # Difference array
+        diff = [0] * (n + 1)
+        
+        # Mark shift ranges
+        for start, end, direction in shifts:
+            if direction == 1:      # forward
+                diff[start] += 1
+                diff[end + 1] -= 1
+            else:                   # backward
+                diff[start] -= 1
+                diff[end + 1] += 1
+        
+        # Build result using prefix sums
+        res = []
+        current = 0
+        
+        for i in range(n):
+            current += diff[i]
+            
+            # Convert char → number (0–25)
+            val = ord(s[i]) - ord('a')
+            
+            # Apply shift with wraparound
+            val = (val + current) % 26
+            
+            # Convert back → char
+            res.append(chr(val + ord('a')))
+        
+        return "".join(res)
