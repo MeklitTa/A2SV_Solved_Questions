@@ -1,0 +1,30 @@
+from collections import defaultdict
+
+def count_good_segments(n, k, arr):
+    count = 0
+    freq = defaultdict(int)
+    left = 0
+    unique = 0
+
+    for right in range(n):
+        if freq[arr[right]] == 0:
+            unique += 1
+        freq[arr[right]] += 1
+
+        while unique > k:
+            freq[arr[left]] -= 1
+            if freq[arr[left]] == 0:
+                unique -= 1
+            left += 1
+
+        # Number of good segments ending at right
+        count += right - left + 1
+
+    return count
+
+# Reading input
+n, k = map(int, input().split())
+arr = list(map(int, input().split()))
+
+# Output the result
+print(count_good_segments(n, k, arr))
