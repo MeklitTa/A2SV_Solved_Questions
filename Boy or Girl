@@ -1,0 +1,28 @@
+t = int(input())
+for _ in range(t):
+    n = int(input())
+    a = input().strip()
+    b = input().strip()
+    zeros = ones = 0
+    for i in range(n):
+        if a[i] == '0':
+            zeros += 1
+        else:
+            ones += 1
+    count_0 = count_1 = 0
+    flip = False
+    possible = True
+    for i in range(n-1, -1, -1):
+        current = a[i]
+        if flip:
+            current = '0' if current == '1' else '1'
+        if current != b[i]:
+            if count_0 != count_1:
+                possible = False
+                break
+            flip = not flip
+        if a[i] == '0':
+            count_0 += 1
+        else:
+            count_1 += 1
+    print("YES" if possible else "NO")
