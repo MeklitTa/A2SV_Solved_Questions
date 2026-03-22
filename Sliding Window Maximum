@@ -1,0 +1,24 @@
+from typing import List
+
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        l=0
+        r=0
+        q=deque()
+        res=[]
+        
+        while r < len(nums):
+            while q and nums[q[-1]] <nums[r]:
+                p.pop()
+            q.append(r)
+            while q[-1] <l:
+                q.popleft()
+            if(r+1 >=3):
+                res.append(q[-1])
+                l+=1
+        return res
+
+            
+
+        
+     
