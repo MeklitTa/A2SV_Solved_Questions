@@ -1,0 +1,41 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def removeNodes(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        
+        # Helper function to reverse a linked list
+        def reverse(head):
+            prev = None
+            curr = head
+            while curr:
+                nxt = curr.next
+                curr.next = prev
+                prev = curr
+                curr = nxt
+            return prev
+        
+        # Reverse the list
+        head = reverse(head)
+        
+        max_val = float('-inf')
+        dummy = ListNode(0)
+        curr_new = dummy
+        
+        # Traverse reversed list
+        curr = head
+        while curr:
+            if curr.val >= max_val:
+                max_val = curr.val
+                curr_new.next = curr
+                curr_new = curr_new.next
+            curr = curr.next
+        
+        # End the list
+        curr_new.next = None
+        
+        # Reverse back to original order
+        return reverse(dummy.next)
