@@ -1,0 +1,31 @@
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        def backtrack(row: int):
+            if row == n:
+                solution = ["".join(board[i]) for i in range(n)]
+                solutions.append(solution)
+                return
+            
+            for col in range(n):
+                if is_safe(row, col):
+                    board[row][col] = 'Q'
+                    cols.add(col)
+                    diag1.add(row - col)
+                    diag2.add(row + col)
+                    backtrack(row + 1)
+                    board[row][col] = '.'
+                    cols.remove(col)
+                    diag1.remove(row - col)
+                    diag2.remove(row + col)
+        
+        def is_safe(row: int, col: int) -> bool:
+           
+            return col not in cols and (row - col) not in diag1 and (row + col) not in diag2
+        board = [['.' for _ in range(n)] for _ in range(n)]
+        solutions = []
+        cols = set()      
+        diag1 = set()     
+        diag2 = set()     
+        backtrack(0)
+        
+        return solutions
